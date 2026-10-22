@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Book finder</title>
+    <style>
+      body {
+        background: #fff;
+        color: #111;
+        font-family: Georgia, serif;
+        line-height: 1.4;
+        margin: 2rem auto;
+        max-width: 40rem;
+      }
+      section {
+        margin-top: 1.5rem;
+      }
+      label,
+      input,
+      textarea,
+      button {
+        display: block;
+        font: inherit;
+      }
+      textarea,
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 0.25rem;
+      }
+      button {
+        margin-top: 0.75rem;
+      }
+      #books {
+        padding-left: 1.25rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Book finder</h1>
+
+    <form id="finder-form">
+      <label for="text">What book, or what kind of book?</label>
+      <textarea id="text" name="text" rows="4"></textarea>
+      <button type="submit">Send</button>
+    </form>
+
+    <section>
+      <h2>Reply</h2>
+      <p id="reply"></p>
+    </section>
+
+    <section>
+      <h2>Books</h2>
+      <ul id="books"></ul>
+    </section>
+
+    <section>
+      <h2>Other</h2>
+      <p>Choose Other to send more detail back to the box.</p>
+      <button type="button">Other</button>
+      <label for="other-text">More info</label>
+      <input id="other-text" type="text" />
+    </section>
+
+    <section>
+      <h2>Summary</h2>
+      <p id="summary"></p>
+    </section>
+
+    <section>
+      <h2>Nomination</h2>
+      <label for="nomination-title">Title</label>
+      <input id="nomination-title" type="text" />
+      <label for="nomination-author">Author</label>
+      <input id="nomination-author" type="text" />
+      <label for="nomination-summary">Summary</label>
+      <textarea id="nomination-summary" rows="4"></textarea>
+      <label for="nomination-pages">Page count</label>
+      <input id="nomination-pages" type="text" />
+      <button type="button">Save</button>
+    </section>
+
+    <script>
+      const form = document.querySelector("#finder-form");
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const text = new FormData(form).get("text");
+        const response = await fetch("/inquire", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text }),
+        });
+        const body = await response.json();
+
+        document.querySelector("#reply").textContent = body.reply;
+        document.querySelector("#summary").textContent = body.nomination.summary;
+
+        const books = document.querySelector("#books");
+        books.replaceChildren();
+        for (const book of body.books) {
+          const item = document.createElement("li");
+          item.textContent = `${book.title} by ${book.author}. ${book.summary} ${book.reason}`;
+          books.append(item);
+        }
+
+        const nomination = body.nomination;
+        document.querySelector("#nomination-title").value = nomination.title;
+        document.querySelector("#nomination-author").value = nomination.author;
+        document.querySelector("#nomination-summary").value = nomination.summary;
+        document.querySelector("#nomination-pages").value =
+          nomination.page_count === null ? "" : String(nomination.page_count);
+      });
+    </script>
+  </body>
+</html>
