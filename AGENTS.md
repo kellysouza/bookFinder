@@ -29,3 +29,12 @@ change, and include their output in your report. Do not report a change as
 done while any of them fails.
 - Never weaken a check to make it pass: do not raise `max-complexity`, add a
 `# noqa` or `# type: ignore` comment, or skip a test.
+
+## Changes
+
+- Never commit to `main`. Make each change on its own branch and open a pull
+  request with `gh pr create`. The description has a `## Summary` section
+  (what changed and why, citing docs/proposal.md) and a `## Test plan`
+  checklist (checked items were run; unchecked items are left for the reviewer).
+- After pushing, run `gh pr checks --watch` and report the result.
+- Never merge a pull request. The person merges after reviewing it.
