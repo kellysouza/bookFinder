@@ -137,6 +137,6 @@ The model's knowledge has a cutoff, so books newer than it, including an author'
 
 That source is the biggest uncertainty. Open Library and the course model can answer it.
 
-For *Blood Music*, *Dead Wake*, and *Murder on the Orient Express*, record whether the chosen searches return the book, whether Open Library has one record or several, whether any record has a usable description, and whether a jacket summary is accurate without that description and without the ending.
+For *Blood Music*, *Dead Wake*, and *Murder on the Orient Express*, record whether searching Open Library by the book's title and author returns it, whether Open Library has one record or several, whether any record has a usable description, and whether a jacket summary is accurate without that description and without the ending.
 
 If the model does not know the book and no record has a usable description, version one either allows a web search or shows the book with no summary until the member writes one.

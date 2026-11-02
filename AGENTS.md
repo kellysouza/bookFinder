@@ -16,6 +16,7 @@ The full proposal is in docs/proposal.md.
   - `app/rules/nomination.py`: whether a save is accepted.
   - `app/rules/books.py`: cleaning the model's book list, and the newest-book note.
   - `app/rules/conversation.py`: the limits on a conversation.
+- `scripts/evaluate_finder.py`: a hand-run check of the finder against the real model, with its cases in `scripts/finder_cases.json`. Not run by pytest.
 - This is the starting layout. When a module takes on a second responsibility, split it by responsibility (for example, `app/rules.py` into `app/rules/quota.py` and `app/rules/scope.py`) and update this section in the same change.
 
 ## Commands
