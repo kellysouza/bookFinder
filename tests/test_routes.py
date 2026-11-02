@@ -1,3 +1,4 @@
+import html
 from collections.abc import Callable, Iterator
 
 import pytest
@@ -28,6 +29,23 @@ def use_model() -> Iterator[Callable[[Model], None]]:
 
 def test_page_loads():
     assert client.get("/").status_code == 200
+
+
+@pytest.mark.parametrize("copy", [
+    "Hi, I'm here to help you nominate a book. Do you have one in mind, or would you like help coming up with one?",
+    "I have one in mind", "I need help coming up with one",
+    "Great, I'd love to help you find it. Tell me any details you can recall.",
+    "Great, I'll make suggestions. Tell me what kinds of books you like.",
+    "Sorry, I couldn't reach the book finder just now. Please try again.",
+    "This chat is getting long. Tap New search to start fresh.",
+    "Likely books", "New search",
+])
+def test_page_contains_the_fixed_copy(copy):
+    assert copy in html.unescape(client.get("/").text)
+
+
+def test_page_no_longer_has_the_nomination_form():
+    assert "nomination-title" not in client.get("/").text
 
 
 def test_inquire_returns_the_reply_and_cleaned_books(use_model):

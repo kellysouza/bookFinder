@@ -5,114 +5,392 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Book finder</title>
     <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
       body {
-        background: #fff;
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        background: #f4f5f8;
         color: #111;
-        font-family: Georgia, serif;
-        line-height: 1.4;
-        margin: 2rem auto;
-        max-width: 40rem;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       }
-      section {
-        margin-top: 1.5rem;
-      }
-      label,
-      input,
-      textarea,
-      button {
-        display: block;
+      button,
+      input {
         font: inherit;
       }
-      textarea,
-      input {
-        width: 100%;
-        box-sizing: border-box;
-        margin-top: 0.25rem;
+      .phone {
+        background: #fff;
+        border-left: 1px solid #d0d4dc;
+        border-right: 1px solid #d0d4dc;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        margin: 0 auto;
+        max-width: 40rem;
       }
-      button {
-        margin-top: 0.75rem;
+      .titlebar {
+        align-items: center;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 16px;
       }
-      #books {
-        padding-left: 1.25rem;
+      .titlebar h1 {
+        font-size: 17px;
+        margin: 0;
+      }
+      .newsearch {
+        align-items: center;
+        background: #fff;
+        border: 1px solid #d0d4dc;
+        border-radius: 8px;
+        color: #333;
+        cursor: pointer;
+        display: flex;
+        font-size: 14px;
+        font-weight: 500;
+        gap: 6px;
+        padding: 4px 10px;
+      }
+      .newsearch b {
+        font-size: 18px;
+        line-height: 1;
+      }
+      .thread {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        gap: 9px;
+        overflow-y: auto;
+        padding: 14px;
+      }
+      .bubble {
+        border-radius: 14px;
+        font-size: 14px;
+        line-height: 1.4;
+        max-width: 82%;
+        padding: 9px 13px;
+        white-space: pre-wrap;
+      }
+      .member {
+        align-self: flex-end;
+        background: #2f6fde;
+        border-bottom-right-radius: 4px;
+        color: #fff;
+      }
+      .finder {
+        align-self: flex-start;
+        background: #eef0f4;
+        border-bottom-left-radius: 4px;
+        color: #111;
+      }
+      .finder.model {
+        background: #e6dcff;
+      }
+      .choices {
+        align-self: flex-start;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .choice {
+        background: #fff;
+        border: 1px solid #2f6fde;
+        border-radius: 999px;
+        color: #2f6fde;
+        cursor: pointer;
+        font-size: 13px;
+        padding: 5px 12px;
+      }
+      .choice:disabled {
+        cursor: default;
+      }
+      .choice.picked {
+        background: #2f6fde;
+        color: #fff;
+      }
+      .choice.faded {
+        opacity: 0.35;
+      }
+      .likely {
+        background: #faf8ff;
+        border-top: 1px solid #e5e7eb;
+        max-height: 45%;
+        overflow-y: auto;
+        padding: 10px 14px;
+      }
+      .likely h2 {
+        color: #6a55b8;
+        font-size: 12px;
+        letter-spacing: 0.05em;
+        margin: 0 0 6px;
+        text-transform: uppercase;
+      }
+      .cards {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .card {
+        background: #fff;
+        border: 1px solid #c9b8f5;
+        border-left: 4px solid #8a6ae0;
+        border-radius: 9px;
+        padding: 7px 11px;
+        transition: box-shadow 0.4s;
+      }
+      .card.new {
+        box-shadow: 0 0 0 2px #ffd36b;
+      }
+      .cardtitle {
+        font-size: 14px;
+        font-style: italic;
+        font-weight: 700;
+      }
+      .cardauthor {
+        color: #555;
+        font-size: 12px;
+        margin: 1px 0 2px;
+      }
+      .cardreason {
+        font-size: 12px;
+        line-height: 1.3;
+      }
+      .bar {
+        align-items: center;
+        border-top: 1px solid #e5e7eb;
+        display: flex;
+        gap: 8px;
+        padding: 10px 12px;
+      }
+      .bar input {
+        border: 1px solid #d0d4dc;
+        border-radius: 999px;
+        flex: 1;
+        font-size: 14px;
+        padding: 7px 13px;
+      }
+      .bar button {
+        background: #2f6fde;
+        border: none;
+        border-radius: 999px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 7px 15px;
+      }
+      .bar input:disabled,
+      .bar button:disabled {
+        cursor: default;
+        opacity: 0.35;
       }
     </style>
   </head>
   <body>
-    <h1>Book finder</h1>
+    <div class="phone">
+      <header class="titlebar">
+        <h1>Book finder</h1>
+        <button id="new-search" class="newsearch" type="button"><b>+</b> New search</button>
+      </header>
 
-    <form id="finder-form">
-      <label for="text">What book, or what kind of book?</label>
-      <textarea id="text" name="text" rows="4"></textarea>
-      <button type="submit">Send</button>
-    </form>
+      <main id="thread" class="thread" aria-live="polite"></main>
 
-    <section>
-      <h2>Reply</h2>
-      <p id="reply"></p>
-    </section>
+      <section id="likely" class="likely" hidden>
+        <h2>Likely books</h2>
+        <div id="cards" class="cards"></div>
+      </section>
 
-    <section>
-      <h2>Books</h2>
-      <ul id="books"></ul>
-    </section>
+      <form id="bar" class="bar">
+        <input
+          id="text"
+          type="text"
+          maxlength="500"
+          autocomplete="off"
+          aria-label="Your message"
+          placeholder="Choose an option above"
+          disabled
+        />
+        <button id="send" type="submit" disabled>Send</button>
+      </form>
+    </div>
 
-    <section>
-      <h2>Other</h2>
-      <p>Choose Other to send more detail back to the box.</p>
-      <button type="button">Other</button>
-      <label for="other-text">More info</label>
-      <input id="other-text" type="text" />
-    </section>
-
-    <section>
-      <h2>Summary</h2>
-      <p id="summary"></p>
-    </section>
-
-    <section>
-      <h2>Nomination</h2>
-      <label for="nomination-title">Title</label>
-      <input id="nomination-title" type="text" />
-      <label for="nomination-author">Author</label>
-      <input id="nomination-author" type="text" />
-      <label for="nomination-summary">Summary</label>
-      <textarea id="nomination-summary" rows="4"></textarea>
-      <label for="nomination-pages">Page count</label>
-      <input id="nomination-pages" type="text" />
-      <button type="button">Save</button>
-    </section>
+    <template id="opening">
+      <div class="bubble finder">Hi, I'm here to help you nominate a book. Do you have one in mind, or would you like help coming up with one?</div>
+      <div class="choices">
+        <button class="choice" type="button" data-path="find">I have one in mind</button>
+        <button class="choice" type="button" data-path="suggest">I need help coming up with one</button>
+      </div>
+    </template>
 
     <script>
-      const form = document.querySelector("#finder-form");
+      const FOLLOW_UPS = {
+        find: "Great, I'd love to help you find it. Tell me any details you can recall.",
+        suggest: "Great, I'll make suggestions. Tell me what kinds of books you like.",
+      };
+      const ERROR_LINE = "Sorry, I couldn't reach the book finder just now. Please try again.";
+      const LIMIT_LINE = "This chat is getting long. Tap New search to start fresh.";
+      const MEMBER_LINE_LIMIT = 30;
+      const HIGHLIGHT_MS = 2000;
 
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        const text = new FormData(form).get("text");
+      const thread = document.querySelector("#thread");
+      const likely = document.querySelector("#likely");
+      const cards = document.querySelector("#cards");
+      const bar = document.querySelector("#bar");
+      const textBox = document.querySelector("#text");
+      const sendButton = document.querySelector("#send");
+      const opening = document.querySelector("#opening");
+
+      // A response that arrives after New search belongs to the old search; `search` tells them apart.
+      const state = { path: null, turns: [], books: [], waiting: false, search: 0 };
+
+      function memberLineCount() {
+        return state.turns.filter((turn) => turn.speaker === "member").length;
+      }
+
+      function atLimit() {
+        return memberLineCount() >= MEMBER_LINE_LIMIT;
+      }
+
+      function updateBar() {
+        const open = state.path !== null && !atLimit();
+        textBox.disabled = !open;
+        sendButton.disabled = !open || state.waiting;
+        textBox.placeholder = state.path === null ? "Choose an option above" : "Tell me more";
+      }
+
+      function addBubble(text, classes) {
+        const bubble = document.createElement("div");
+        bubble.className = `bubble ${classes}`;
+        bubble.textContent = text;
+        thread.append(bubble);
+        scrollToEnd();
+      }
+
+      function scrollToEnd() {
+        thread.scrollTop = thread.scrollHeight;
+      }
+
+      function bookKey(book) {
+        return `${book.title.trim().toLowerCase()}\n${book.author.trim().toLowerCase()}`;
+      }
+
+      function makeCard(book) {
+        const card = document.createElement("div");
+        card.className = "card";
+        const title = document.createElement("div");
+        title.className = "cardtitle";
+        title.textContent = book.title;
+        const author = document.createElement("div");
+        author.className = "cardauthor";
+        author.textContent = book.year === null ? book.author : `${book.author} · ${book.year}`;
+        const reason = document.createElement("div");
+        reason.className = "cardreason";
+        reason.textContent = book.reason;
+        card.append(title, author, reason);
+        return card;
+      }
+
+      function showBooks(books) {
+        const previous = new Set(state.books.map(bookKey));
+        state.books = books;
+        cards.replaceChildren();
+        for (const book of books) {
+          const card = makeCard(book);
+          if (!previous.has(bookKey(book))) {
+            card.classList.add("new");
+            setTimeout(() => card.classList.remove("new"), HIGHLIGHT_MS);
+          }
+          cards.append(card);
+        }
+        likely.hidden = books.length === 0;
+        scrollToEnd();
+      }
+
+      function choose(button, choices) {
+        state.path = button.dataset.path;
+        for (const choice of choices.querySelectorAll(".choice")) {
+          choice.disabled = true;
+          choice.classList.add(choice === button ? "picked" : "faded");
+        }
+        addBubble(FOLLOW_UPS[state.path], "finder");
+        updateBar();
+        textBox.focus();
+      }
+
+      function startSearch() {
+        state.path = null;
+        state.turns = [];
+        state.waiting = false;
+        state.search += 1;
+        showBooks([]);
+        textBox.value = "";
+        thread.replaceChildren(opening.content.cloneNode(true));
+        const choices = thread.querySelector(".choices");
+        for (const button of choices.querySelectorAll(".choice")) {
+          button.addEventListener("click", () => choose(button, choices));
+        }
+        updateBar();
+      }
+
+      async function inquire() {
         const response = await fetch("/inquire", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text }),
+          body: JSON.stringify({ path: state.path, turns: state.turns, books: state.books }),
         });
-        const body = await response.json();
-
-        document.querySelector("#reply").textContent = body.reply;
-        document.querySelector("#summary").textContent = body.nomination.summary;
-
-        const books = document.querySelector("#books");
-        books.replaceChildren();
-        for (const book of body.books) {
-          const item = document.createElement("li");
-          item.textContent = `${book.title} by ${book.author}. ${book.summary} ${book.reason}`;
-          books.append(item);
+        if (!response.ok) {
+          throw new Error(`The book finder answered ${response.status}.`);
         }
+        return response.json();
+      }
 
-        const nomination = body.nomination;
-        document.querySelector("#nomination-title").value = nomination.title;
-        document.querySelector("#nomination-author").value = nomination.author;
-        document.querySelector("#nomination-summary").value = nomination.summary;
-        document.querySelector("#nomination-pages").value =
-          nomination.page_count === null ? "" : String(nomination.page_count);
+      async function send() {
+        const text = textBox.value.trim();
+        if (text === "" || state.waiting || textBox.disabled) {
+          return;
+        }
+        const search = state.search;
+        addBubble(text, "member");
+        state.turns.push({ speaker: "member", text });
+        textBox.value = "";
+        state.waiting = true;
+        updateBar();
+        try {
+          const answer = await inquire();
+          if (search !== state.search) {
+            return;
+          }
+          addBubble(answer.reply, "finder model");
+          state.turns.push({ speaker: "finder", text: answer.reply });
+          showBooks(answer.books);
+        } catch {
+          if (search !== state.search) {
+            return;
+          }
+          addBubble(ERROR_LINE, "finder");
+        }
+        state.waiting = false;
+        if (atLimit()) {
+          addBubble(LIMIT_LINE, "finder");
+        }
+        updateBar();
+        if (!textBox.disabled) {
+          textBox.focus();
+        }
+      }
+
+      bar.addEventListener("submit", (event) => {
+        event.preventDefault();
+        send();
       });
+      document.querySelector("#new-search").addEventListener("click", startSearch);
+
+      startSearch();
     </script>
   </body>
 </html>
