@@ -250,7 +250,7 @@ Expected: FAIL with `ImportError: cannot import name 'FinderRequest' from 'app.a
   - who the member is and what the two paths mean;
   - real books only;
   - the current best list on every answer, kept, dropped, or added from the books shown;
-  - a full author name may show best-known books, but a single vague clue gets a question;
+  - a full author name may show best-known books; a single vague clue on its own gets a question, but several clues that together point to a book get that book;
   - one book when one clearly fits, up to three otherwise;
   - broad requests get a question;
   - the reply names no book that isn't on a card and doesn't think out loud;
