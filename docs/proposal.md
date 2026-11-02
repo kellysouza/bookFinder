@@ -8,7 +8,7 @@ A book finder that helps a book club member nominate a book they have in mind, o
 
 The user is a member of my book club nominating a book for the next meeting. I already run the club’s web app. Add a Book fills the nomination form from Open Library only when the title or author is close to what the member types. A partial title, a misspelled author, or a description of the book does not find it. The form cannot suggest a type of book. When a record is found, its description is often missing, in another language, or wrong, so a voter cannot tell the books apart.
 
-Find means the member has one book in mind. They can use the finder to fill the form even when they already know the title and author. Suggest means they have no particular book, only a type. One box takes either kind of input. The model chooses find or suggest, and asks if the input could be either. Today’s search covers only find, and only when the title or author is already close.
+Find means the member has one book in mind. They can use the finder to fill the form even when they already know the title and author. Suggest means they have no particular book, only a type. The member chooses which before typing: **I have one in mind** (find) or **I need help coming up with one** (suggest). Today’s search covers only find, and only when the title or author is already close.
 
 ## Example input
 
@@ -20,7 +20,7 @@ The book is *Blood Music* by Greg Bear. “Bear” is the author’s last name, 
 
 Rows 1–3 and 6 are realistic examples I can share. Rows 4, 5, 7, and 8 are synthetic. Rows 4 and 8 were checked against Open Library on October 16, 2026. No input names a person.
 
-Shown books are Open Library records only, at most three, each with title, author, and a jacket summary. The summary does not give the ending, the twist, the culprit, or a death.
+Shown books are named by the model from its own knowledge, then checked against Open Library before they are shown, so they are Open Library records only, at most three, each with title, author, and a jacket summary. The summary does not give the ending, the twist, the culprit, or a death.
 
 1. Realistic. Find. The example above. Expect *Blood Music*, Greg Bear, if an author search returns it. If it does not, ask for more. Do not offer a different book that only has “bear” in the title.
 2. Realistic. Suggest. “a book with themes like Brave New World.” Expect books about a controlled society, such as *1984* or *Fahrenheit 451* when Open Library returns them. If none fit, ask for more.
@@ -41,7 +41,7 @@ The check against today’s work: the Greg Bear scrap that Add a Book misses end
 
 The paper photos are not numbered. These are the screen areas. `?` marks an open question.
 
-1. One box for user input and agent response.
+1. A chat. The member chooses find or suggest, then sends clues one line at a time; the model replies to each line and keeps up to three likely books pinned above the text box, updating them as clues arrive.
 2. Up to three books selection returned to the user, or a request for more input. Each shows title, author, and  brief summary.
 3. The member selects one book, or chooses Other, supplies more info and returns to the chat.
 4. The agent writes the summary and presents it to the user for approval or iteration.
@@ -77,15 +77,15 @@ Neither source is sensitive.
 
 ## Up to three core features
 
-1. An agent chatbox, which the model uses to turn the input into Open Library searches and keeps up to three options, or asks for more information.
+1. An agent chat in which the model names up to three likely books from the member's clues, which Open Library then checks, or asks for more information.
 2. Book summary generation. 
 3. The member selects a book, edits title, author, summary, or page count, and saves it onto the nomination list the vote already reads.
 
 ## LLM role
 
-First call. Input: the typed text and local nomination titles. Output: find or suggest, and one or more Open Library searches. If the input could be either, it asks. This call does not show a book.
+First call. Input: the path the member chose, the conversation, and the books shown. Output: a reply and up to three likely books. It names only real books. Every answer returns the current best list: it keeps the books that still fit, drops the ones a new clue rules out, and adds better ones. A single vague clue on its own, such as only an author's first name, gets a question and no book. When several clues together point to a book, it names that book. The reply names no book that is not on a card. No endings, twists, culprits, or deaths. A book it does not recognize gets "I don't recognize that one" and no book. The newest by an author means the newest it knows of, with a fixed note that its book knowledge stops at a cutoff.
 
-Second call. Input: the Open Library records those searches returned. Output: up to three that fit, each with a one-line reason, or a request for more. It does not fill the form from memory.
+Second call. It checks the named books in Open Library by title and author before they are shown. When the model names none, or the member says the book is newer, it searches Open Library with the member's words or the author's name. It does not fill the form from memory.
 
 Third call, once per kept book. Input: title, author, the typed text, and subjects when present. Output: the summary in the model’s own words, not a copy or a translation of Open Library. Page count is not an output of this call. Where the plot comes from when the description is unusable is open below.
 
@@ -125,11 +125,13 @@ The form is filled in. The write fails becausxe the title or author is missing, 
 
 Version one does not rebuild voting, accounts, or results. It is not a phone app. It does not write back to Open Library, scan a barcode, track reading, or run a discussion. It does not save a book the member did not select. It runs locally. A public site waits for Docker and cloud.
 
-Later: look up a book the club already nominated, to nominate it again or only to read it, and look up the previous winning book. That reads the voting app. Names, emails, and vote counts stay out of the prompt.
+Later: look up a book the club already nominated, to nominate it again or only to read it, and look up the previous winning book. That reads the voting app. Names, emails, and vote counts stay out of the prompt. Also later: tabs for several searches at once.
 
 ## Open questions
 
 Where does the summary’s plot come from when Open Library’s description is missing, in another language, or wrong? Title, author, and subjects do not contain it. The candidates are what the model already knows, a usable description that the model rewrites, or a web search.
+
+The model's knowledge has a cutoff, so books newer than it, including an author's newest, need Open Library sorted by date or a web search. Which one, and whether a web search can go through the gateway, is open.
 
 ## Next investigation
 
