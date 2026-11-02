@@ -5,7 +5,7 @@ from typing import Literal, Self
 
 from dotenv import load_dotenv
 from pydantic import BaseModel, ConfigDict, Field, model_validator
-from pydantic_ai import Agent
+from pydantic_ai import Agent, ModelRetry
 from pydantic_ai.models import Model
 from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.providers.openai import OpenAIProvider
@@ -76,7 +76,7 @@ class FinderAnswer(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    reply: str
+    reply: str = Field(max_length=MAX_FINDER_REPLY_CHARS)
     books: list[BookOption] = Field(max_length=MAX_BOOKS)
 
 
@@ -108,13 +108,24 @@ INSTRUCTIONS = (
     "nominating straight from the finder is coming soon, and that for now they can add it "
     "with the club app's Add a Book form, naming the book. "
     "Do not ask another narrowing question, and do not say it was saved. "
-    "When one book clearly fits, end the reply by asking whether the member would like to nominate it."
+    "When one book clearly fits and the member has not yet said yes to it, "
+    "end the reply by asking whether they would like to nominate it."
 )
+
+MAX_MODEL_REPLY_CHARS = MAX_FINDER_REPLY_CHARS - len(NEWEST_NOTE) - 1
 
 finder_agent: Agent[None, FinderAnswer] = Agent(
     output_type=FinderAnswer,
     instructions=INSTRUCTIONS,
 )
+
+
+@finder_agent.output_validator
+def check_reply_length(output: FinderAnswer) -> FinderAnswer:
+    """Ask again when the reply leaves no room for the newest note."""
+    if len(output.reply) > MAX_MODEL_REPLY_CHARS:
+        raise ModelRetry(f"Keep the reply to at most {MAX_MODEL_REPLY_CHARS} characters.")
+    return output
 
 
 def gateway_model() -> OpenAIChatModel:
