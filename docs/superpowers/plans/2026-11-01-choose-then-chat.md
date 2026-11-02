@@ -249,6 +249,7 @@ Expected: FAIL with `ImportError: cannot import name 'FinderRequest' from 'app.a
 - **`INSTRUCTIONS`**: one string in plain sentences, saying everything under "The instructions say" in the spec (the "What the model does" section), with no additions:
   - who the member is and what the two paths mean;
   - real books only;
+  - fewer books rather than a doubtful one;
   - the current best list on every answer, kept, dropped, or added from the books shown;
   - a full author name may show best-known books; a single vague clue on its own gets a question, but several clues that together point to a book get that book;
   - one book when one clearly fits, up to three otherwise;
