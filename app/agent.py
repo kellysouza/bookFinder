@@ -86,8 +86,6 @@ INSTRUCTIONS = (
     "Path suggest means they want help coming up with one. "
     "Name only real, published books with the author's real name. "
     "Leave out any book you are not confident exists. "
-    "If you are not sure a book exists with that exact title and author, leave it out. "
-    "One right book is better than three with a wrong one; never add a book just to fill the list. "
     "Return the current best list on every answer, starting from the books already shown: "
     "keep the ones that still fit, drop the ones the new clue rules out, and add better ones. "
     "Name books once the clues point to them with reasonable confidence. "
