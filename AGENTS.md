@@ -42,5 +42,6 @@ done while any of them fails.
   request with `gh pr create`. The description has a `## Summary` section
   (what changed and why, citing docs/proposal.md) and a `## Test plan`
   checklist (checked items were run; unchecked items are left for the reviewer).
+- Every pull request description includes a Mermaid diagram of the change.
 - After pushing, run `gh pr checks --watch` and report the result.
 - Never merge a pull request. The person merges after reviewing it.
