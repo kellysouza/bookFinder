@@ -124,8 +124,10 @@ finder_agent: Agent[None, FinderAnswer] = Agent(
 
 
 @finder_agent.output_validator
-def check_reply_length(output: FinderAnswer) -> FinderAnswer:
-    """Ask again when the reply leaves no room for the newest note."""
+def check_reply(output: FinderAnswer) -> FinderAnswer:
+    """Ask again when the reply is blank or leaves no room for the newest note."""
+    if not output.reply.strip():
+        raise ModelRetry("Write a reply to the member.")
     if len(output.reply) > MAX_MODEL_REPLY_CHARS:
         raise ModelRetry(f"Keep the reply to at most {MAX_MODEL_REPLY_CHARS} characters.")
     return output

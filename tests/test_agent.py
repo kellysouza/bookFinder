@@ -113,6 +113,12 @@ async def test_answer_fails_when_the_model_keeps_replying_too_long():
         await answer(request_with(member("hi")), TestModel(custom_output_args=output))
 
 
+async def test_answer_fails_when_the_model_keeps_replying_blank():
+    output = {"reply": "   ", "books": []}
+    with pytest.raises(UnexpectedModelBehavior):
+        await answer(request_with(member("hi")), TestModel(custom_output_args=output))
+
+
 @pytest.mark.parametrize("turns", [
     [],                                               # no member line
     [member("hi"), finder("Which book?")],            # last turn is the finder's
