@@ -55,7 +55,7 @@ The paper photos are not numbered. These are the screen areas. `?` marks an open
 
 ![Area 5: the nomination form, then save](sketches/04-accept-and-save.jpg)
 
-The next photo is a note of the goal, not a screen: find one book, or suggest one. The agent infers which the user intends. The last photo is the existing nomination form. Today the member fills it by hand. Version one fills it from the finder. 
+The next photo is a note of the goal, not a screen: find one book, or suggest one. The member chooses which before typing. The last photo is the existing nomination form. Today the member fills it by hand. Version one fills it from the finder. 
 
 ![Goal: find one book, or suggest a book by author or content](sketches/01-book-finder-goals.jpg)
 
@@ -69,7 +69,7 @@ The next photo is a note of the goal, not a screen: find one book, or suggest on
 
 There are two data sources. 
 
-The first is Open Library, a public API with No key required. The model chooses the searches: a likely title and author, or words from the input. Fields used: title, author, subjects, description or first sentence, and page count when present.
+The first is Open Library, a public API with No key required. The finder searches it by the title and author of each book the model names, or with the member's words or the author's name when the model names none. Fields used: title, author, subjects, description or first sentence, and page count when present.
 
 There is also a local database which contains book information once a book is nominated and also retains voting information. 
 
@@ -91,7 +91,7 @@ Third call, once per kept book. Input: title, author, the typed text, and subjec
 
 ## Data use
 
-Look up Open Library for the searches the model chose. Compare those records with the typed text and with titles this finder already saved. Do not look up votes, accounts, or the voting database.
+Look up Open Library by the title and author of the books the model names, or with the member's words or the author's name. Compare those records with the typed text and with titles this finder already saved. Do not look up votes, accounts, or the voting database.
 
 ## Saved records
 
