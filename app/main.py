@@ -2,32 +2,14 @@
 
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, ConfigDict
 
-from app.agent import BookOption, InquiryResponse, Nomination
+from app.agent import InquiryResponse, ask_finder
 
 app = FastAPI()
 PAGE = Path(__file__).parent / "page.html"
-
-PLACEHOLDER_RESPONSE = InquiryResponse(
-    reply="This is a placeholder reply.",
-    books=[
-        BookOption(
-            title="Placeholder title",
-            author="Placeholder author",
-            summary="Placeholder summary",
-            reason="Placeholder reason",
-        )
-    ],
-    nomination=Nomination(
-        title="Placeholder title",
-        author="Placeholder author",
-        summary="Placeholder summary",
-        page_count=None,
-    ),
-)
 
 
 class InquiryRequest(BaseModel):
@@ -46,6 +28,7 @@ def home() -> HTMLResponse:
 
 @app.post("/inquire")
 def inquire(inquiry: InquiryRequest) -> InquiryResponse:
-    """Accept the typed text and return the fixed placeholder."""
-    del inquiry
-    return PLACEHOLDER_RESPONSE
+    """Accept the typed text and return the finder's reply."""
+    if not inquiry.text.strip():
+        raise HTTPException(status_code=422, detail="Enter a book or a kind of book.")
+    return ask_finder(inquiry.text)
