@@ -11,6 +11,10 @@ The full proposal is in docs/proposal.md.
 ## Layout
 
 - `app/main.py`: FastAPI routes and the page. No business rules here.
+- `app/db.py`: the Postgres connection.
+- `db/migrations/`: schema changes run with dbmate.
+- `db/seed.py`: sample rows for an empty database.
+- `db/queries.py`: SQL for questions the finder asks its data.
 - `app/agent.py`: the Pydantic AI agent and its output model.
 - `app/rules/`: business rules in plain Python. No FastAPI, no LLM client.
   - `app/rules/nomination.py`: whether a save is accepted.
@@ -32,7 +36,7 @@ uv run pytest                    # run the tests
 
 - Tests never call a real model. Use `TestModel` with
 `override_allow_model_requests(False)`.
-- Read `LLM_API_TOKEN` and `LLM_API_GATEWAY` from the environment. Never
+- Read `LLM_API_TOKEN`, `LLM_API_GATEWAY`, and `DATABASE_URL` from the environment. Never
 write a key into a file other than `.env`.
 - Run `uv run ruff check`, `uv run mypy`, and `uv run pytest` after every
 change, and include their output in your report. Do not report a change as
