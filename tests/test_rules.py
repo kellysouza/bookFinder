@@ -1,4 +1,4 @@
-from app.rules import save_is_rejected
+from app.rules.nomination import save_is_rejected
 
 
 def test_save_is_rejected_when_the_meeting_is_not_accepting_nominations():

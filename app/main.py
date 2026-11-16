@@ -1,41 +1,22 @@
 """FastAPI routes and the page. No business rules here."""
 
 from pathlib import Path
+from typing import Annotated
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
-from pydantic import BaseModel, ConfigDict
+from pydantic_ai.exceptions import AgentRunError
+from pydantic_ai.models import Model
 
-from app.agent import BookOption, InquiryResponse, Nomination
+from app.agent import FinderAnswer, FinderRequest, answer, gateway_model
 
 app = FastAPI()
 PAGE = Path(__file__).parent / "page.html"
 
-PLACEHOLDER_RESPONSE = InquiryResponse(
-    reply="This is a placeholder reply.",
-    books=[
-        BookOption(
-            title="Placeholder title",
-            author="Placeholder author",
-            summary="Placeholder summary",
-            reason="Placeholder reason",
-        )
-    ],
-    nomination=Nomination(
-        title="Placeholder title",
-        author="Placeholder author",
-        summary="Placeholder summary",
-        page_count=None,
-    ),
-)
 
-
-class InquiryRequest(BaseModel):
-    """The text from the one box."""
-
-    model_config = ConfigDict(extra="forbid")
-
-    text: str
+def get_model() -> Model:
+    """Return the model the finder agent uses."""
+    return gateway_model()
 
 
 @app.get("/")
@@ -45,7 +26,13 @@ def home() -> HTMLResponse:
 
 
 @app.post("/inquire")
-def inquire(inquiry: InquiryRequest) -> InquiryResponse:
-    """Accept the typed text and return the fixed placeholder."""
-    del inquiry
-    return PLACEHOLDER_RESPONSE
+async def inquire(
+    request: FinderRequest, model: Annotated[Model, Depends(get_model)]
+) -> FinderAnswer:
+    """Answer the member's latest line, or 502 when the model is unavailable."""
+    try:
+        return await answer(request, model)
+    except AgentRunError as error:
+        raise HTTPException(
+            status_code=502, detail="The book finder model is unavailable."
+        ) from error

@@ -1,0 +1,126 @@
+<style>
+  .row { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; align-items: flex-start; }
+  .col { flex: 1 1 360px; max-width: 420px; }
+  .phone { border: 1px solid #d0d4dc; border-radius: 14px; background: #fff; overflow: hidden; margin-bottom: 8px; display: flex; flex-direction: column; }
+  .titlebar { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid #e5e7eb; font-weight: 600; color: #111; }
+  .newsearch { display: flex; align-items: center; gap: 6px; font-weight: 500; font-size: 14px; color: #333; border: 1px solid #d0d4dc; border-radius: 8px; padding: 4px 10px; }
+  .newsearch b { font-size: 18px; line-height: 1; }
+  .thread { padding: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .bubble { max-width: 82%; padding: 9px 13px; border-radius: 14px; line-height: 1.4; font-size: 14px; }
+  .member { align-self: flex-end; background: #2f6fde; color: #fff; border-bottom-right-radius: 4px; }
+  .finder { align-self: flex-start; background: #eef0f4; color: #111; border-bottom-left-radius: 4px; }
+  .finder.model { background: #e6dcff; }
+  .tag { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: .04em; color: #888; margin-bottom: 2px; }
+  .choices { align-self: flex-start; display: flex; gap: 8px; flex-wrap: wrap; }
+  .choice { border: 1px solid #2f6fde; color: #2f6fde; border-radius: 999px; padding: 5px 12px; font-size: 13px; background: #fff; }
+  .choice.picked { background: #2f6fde; color: #fff; }
+  .choice.faded { opacity: .35; }
+  .earlier { align-self: center; font-size: 12px; color: #999; }
+  .likely { border-top: 1px solid #e5e7eb; background: #faf8ff; padding: 10px 14px; }
+  .likely h4 { margin: 0 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: #6a55b8; }
+  .likely .empty { font-size: 13px; color: #999; }
+  .cards { display: flex; flex-direction: column; gap: 6px; }
+  .card { border: 1px solid #c9b8f5; border-left: 4px solid #8a6ae0; border-radius: 9px; padding: 7px 11px; background: #fff; }
+  .card.new { box-shadow: 0 0 0 2px #ffd36b; }
+  .cardtitle { font-weight: 700; font-style: italic; font-size: 14px; }
+  .cardauthor { color: #555; font-size: 12px; margin: 1px 0 2px; }
+  .cardreason { font-size: 12px; line-height: 1.3; }
+  .bar { display: flex; gap: 8px; padding: 10px 12px; border-top: 1px solid #e5e7eb; align-items: center; }
+  .bar .box { flex: 1; border: 1px solid #d0d4dc; border-radius: 999px; padding: 7px 13px; color: #888; font-size: 13px; }
+  .bar .send { background: #2f6fde; color: #fff; border-radius: 999px; padding: 7px 15px; font-size: 13px; font-weight: 600; }
+  .bar.off .box, .bar.off .send { opacity: .35; }
+  .caption { font-weight: 600; margin: 0 0 8px; }
+  .note { color: #666; font-size: 13px; margin: 0 0 26px; }
+  .legend { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; font-size: 13px; color: #555; margin-bottom: 18px; }
+  .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 5px; }
+</style>
+
+<h2>Choose first, then chat; likely books update in place</h2>
+<p class="subtitle">Wording, colors, and spacing are placeholders. The flow is what to check.</p>
+<div class="legend">
+  <span><span class="sw" style="background:#eef0f4;border:1px solid #ccd"></span>Fixed text</span>
+  <span><span class="sw" style="background:#e6dcff"></span>Written by the model</span>
+  <span><span class="sw" style="background:#2f6fde"></span>The member</span>
+  <span><span class="sw" style="background:#fff;box-shadow:0 0 0 2px #ffd36b"></span>Card that just changed</span>
+</div>
+
+<div class="row">
+  <div class="col">
+    <p class="caption">1. Opening the page</p>
+    <div class="phone">
+      <div class="titlebar">Book finder <span class="newsearch"><b>+</b> New search</span></div>
+      <div class="thread">
+        <div class="bubble finder"><span class="tag">fixed</span>Hi, I'm here to help you nominate a book. Do you have one in mind, or would you like help coming up with one?</div>
+        <div class="choices"><span class="choice">I have one in mind</span><span class="choice">I need help coming up with one</span></div>
+      </div>
+      <div class="bar off"><div class="box">Choose an option above</div><div class="send">Send</div></div>
+    </div>
+    <p class="note">The text box waits until the member picks one.</p>
+  </div>
+
+  <div class="col">
+    <p class="caption">2. "it's by Becky Chambers": three likely books</p>
+    <div class="phone">
+      <div class="titlebar">Book finder <span class="newsearch"><b>+</b> New search</span></div>
+      <div class="thread">
+        <div class="choices"><span class="choice picked">I have one in mind</span><span class="choice faded">I need help coming up with one</span></div>
+        <div class="bubble finder"><span class="tag">fixed</span>Great, I'd love to help you find it. Tell me any details you can recall.</div>
+        <div class="bubble member">it's by Becky Chambers</div>
+        <div class="bubble finder model"><span class="tag">model</span>Here are her best-known books. Do you remember anything about the story?</div>
+      </div>
+      <div class="likely">
+        <h4>Likely books</h4>
+        <div class="cards">
+          <div class="card new"><div class="cardtitle">The Long Way to a Small, Angry Planet</div><div class="cardauthor">Becky Chambers · 2014</div><div class="cardreason">Her first novel: a tunneling ship and its mixed crew.</div></div>
+          <div class="card new"><div class="cardtitle">A Psalm for the Wild-Built</div><div class="cardauthor">Becky Chambers · 2021</div><div class="cardreason">A tea monk and a robot on a quiet moon.</div></div>
+          <div class="card new"><div class="cardtitle">A Closed and Common Orbit</div><div class="cardauthor">Becky Chambers · 2016</div><div class="cardreason">An AI learning to live in a body.</div></div>
+        </div>
+      </div>
+      <div class="bar"><div class="box">Tell me more</div><div class="send">Send</div></div>
+    </div>
+    <p class="note">A full author name is enough for her best-known books. A first name alone ("greg something") gets a question first.</p>
+  </div>
+
+  <div class="col">
+    <p class="caption">3. "it was about space travel": cards change</p>
+    <div class="phone">
+      <div class="titlebar">Book finder <span class="newsearch"><b>+</b> New search</span></div>
+      <div class="thread">
+        <div class="earlier">· · · earlier messages · · ·</div>
+        <div class="bubble member">it was about space travel</div>
+        <div class="bubble finder model"><span class="tag">model</span>That rules out the tea monk. These two are set in space. Anything else you remember?</div>
+      </div>
+      <div class="likely">
+        <h4>Likely books</h4>
+        <div class="cards">
+          <div class="card"><div class="cardtitle">The Long Way to a Small, Angry Planet</div><div class="cardauthor">Becky Chambers · 2014</div><div class="cardreason">Her first novel: a tunneling ship and its mixed crew.</div></div>
+          <div class="card new"><div class="cardtitle">Record of a Spaceborn Few</div><div class="cardauthor">Becky Chambers · 2018</div><div class="cardreason">Life aboard a fleet of generation ships.</div></div>
+        </div>
+      </div>
+      <div class="bar"><div class="box">Tell me more</div><div class="send">Send</div></div>
+    </div>
+    <p class="note">The cards update in place: one dropped, one added, one kept. The chat says why.</p>
+  </div>
+
+  <div class="col">
+    <p class="caption">4. "something about an angry planet": one card</p>
+    <div class="phone">
+      <div class="titlebar">Book finder <span class="newsearch"><b>+</b> New search</span></div>
+      <div class="thread">
+        <div class="earlier">· · · earlier messages · · ·</div>
+        <div class="bubble member">the title had something about an angry planet</div>
+        <div class="bubble finder model"><span class="tag">model</span>That's The Long Way to a Small, Angry Planet. Would you like to nominate it?</div>
+        <div class="bubble member">yes!</div>
+        <div class="bubble finder model"><span class="tag">model</span>Great choice! Nominating straight from the finder is coming soon. For now, you can add The Long Way to a Small, Angry Planet by Becky Chambers with Add a Book.</div>
+      </div>
+      <div class="likely">
+        <h4>Likely books</h4>
+        <div class="cards">
+          <div class="card new"><div class="cardtitle">The Long Way to a Small, Angry Planet</div><div class="cardauthor">Becky Chambers · 2014</div><div class="cardreason">The angry planet in the title, on a ship of tunnelers.</div></div>
+        </div>
+      </div>
+      <div class="bar"><div class="box">Tell me more</div><div class="send">Send</div></div>
+    </div>
+    <p class="note">One clear match, one card. + New search clears the chat and the cards.</p>
+  </div>
+</div>
