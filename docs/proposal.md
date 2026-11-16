@@ -69,9 +69,9 @@ The next photo is a note of the goal, not a screen: find one book, or suggest on
 
 There are two data sources. 
 
-The first is Open Library, a public API with No key required. The finder searches it by the title and author of each book the model names, or with the member's words or the author's name when the model names none. Fields used: title, author, subjects, description or first sentence, and page count when present.
+The first is Open Library, a public API with no key required. The finder searches it by the title and author of each book the model names, or with the member's words or the author's name when the model names none. Fields used: title, author, description, page count when present, and ISBN. Subjects may be read while a summary is written and are not stored.
 
-There is also a local database which contains book information once a book is nominated and also retains voting information. 
+There is also a local database for this finder. It is Neon Postgres. The application reads its connection string from `DATABASE_URL` in the environment. Voting, accounts, and the club's older nominations stay in the voting app. This database is the search part only. 
 
 Neither source is sensitive. 
 
@@ -79,7 +79,7 @@ Neither source is sensitive.
 
 1. An agent chat in which the model names up to three likely books from the member's clues, which Open Library then checks, or asks for more information.
 2. Book summary generation. 
-3. The member selects a book, edits title, author, summary, or page count, and saves it onto the nomination list the vote already reads.
+3. The member selects a book, edits the description, and saves it onto the nomination list the vote already reads. Title, author, page count, and ISBN come from Open Library and are not edited.
 
 ## LLM role
 
@@ -87,7 +87,7 @@ First call. Input: the path the member chose, the conversation, and the books sh
 
 Second call. It checks the named books in Open Library by title and author before they are shown. When the model names none, or the member says the book is newer, it searches Open Library with the member's words or the author's name. It does not fill the form from memory.
 
-Third call, once per kept book. Input: title, author, the typed text, and subjects when present. Output: the summary in the model’s own words, not a copy or a translation of Open Library. Page count is not an output of this call. Where the plot comes from when the description is unusable is open below.
+Third call, once per kept book. Input: title, author, the typed text, and the Open Library description. Output: the summary in the model’s own words, not a copy or a translation of Open Library. Page count is not an output of this call. Where the plot comes from when the description is unusable is open below. An idea is not stored as a book until Open Library confirms it.
 
 ## Data use
 
@@ -95,21 +95,25 @@ Look up Open Library by the title and author of the books the model names, or wi
 
 ## Saved records
 
-This finder’s database keeps three linked records after a restart.
+This finder’s database keeps the search, not the vote. An idea the model names is not a book until Open Library confirms it. Books Open Library returns but the page never shows are not stored. Subjects are not stored.
 
-- **Inquiry:** the typed text, the books shown, and whether the member selected one, chose Other, or stopped. It points at the works shown.
-- **Work:** Open Library title, author, subjects, and page count when present.
-- **Nomination:** created only on save. It points at one inquiry and one work. It stores title, author, page count when present, the summary after the member’s edit, and whether the post to the voting app succeeded.
+- **Session:** one search conversation. It stores the member’s request. It has the searches run in that conversation and the books that were offered.
+- **Search:** one Open Library lookup. It stores the words sent and how the call ended: books came back, nothing matched, or Open Library was rate-limiting or down. It belongs to one session.
+- **Work:** one book. It stores the Open Library title, page count when present, ISBN, and the Open Library description. The same book found again is the same work.
+- **Author:** one person, one row for one Open Library spelling. Greg Bear on two books is one author. An author stays even if every book of theirs is deleted.
+- **Authorship:** one author of one book. A book has one of these for each author. An author has one for each book. Deleting the book or the author deletes that connection. The other books and the author stay.
+- **Offering:** one session showed one book, and the member picked it or rejected it. It always belongs to a session and a book. Deleting either one deletes the offering. Deleting a session does not delete the book.
+- **Nomination:** created only on save. It points at one book, and at the session when that session still exists. It stores the description the member wrote and whether the post to the voting app succeeded. It does not copy the title, author, page count, or ISBN. Another nomination of the same book has its own description. Deleting the book deletes the nomination. Deleting the session leaves the nomination and clears the session, so the nomination still says which book was nominated.
 
 The voting app’s nomination gains a page-count field. That row is written only by the existing add-book save, and only while the meeting is accepting nominations. Other creates no nomination. A failed post stays on this finder’s nomination.
 
 ## Searchable text
 
-The approved summaries, and what the member typed.
+The description the member saved, the Open Library description, and what the member typed. A search for a kind of book is a later search by meaning over those descriptions, not a match on an Open Library subject.
 
 ## Human review
 
-Save is the confirmation. Until then the member can edit the summary, title, author, and page count. Other, and a request for more, do not write a nomination. Title and author on the card are the Open Library record, so the member can check that the summary matches that book.
+Save is the confirmation. Until then the member can edit the description. Title, author, page count, and ISBN stay as Open Library gave them. Other, and a request for more, do not write a nomination. Title and author on the card are the Open Library record, so the member can check that the description matches that book.
 
 ## One failure case
 
@@ -129,7 +133,7 @@ Later: look up a book the club already nominated, to nominate it again or only t
 
 ## Open questions
 
-Where does the summary’s plot come from when Open Library’s description is missing, in another language, or wrong? Title, author, and subjects do not contain it. The candidates are what the model already knows, a usable description that the model rewrites, or a web search.
+Where does the summary’s plot come from when Open Library’s description is missing, in another language, or wrong? Title and author do not contain it. The Open Library description is kept on the work either way. The candidates are what the model already knows, a usable description that the model rewrites, or a web search.
 
 The model's knowledge has a cutoff, so books newer than it, including an author's newest, need Open Library sorted by date or a web search. Which one, and whether a web search can go through the gateway, is open.
 

@@ -6,7 +6,7 @@ from fastapi.testclient import TestClient
 from pydantic_ai.models import Model, override_allow_model_requests
 from pydantic_ai.models.test import TestModel
 
-from app.main import app, get_model
+from app.main import app, get_connection, get_model
 
 client = TestClient(app)
 
@@ -29,6 +29,27 @@ def use_model() -> Iterator[Callable[[Model], None]]:
 
 def test_page_loads():
     assert client.get("/").status_code == 200
+
+
+class _AnsweringConnection:
+    def execute(self, _query: str) -> "_AnsweringConnection":
+        return self
+
+    def fetchone(self) -> tuple[int]:
+        return (1,)
+
+
+def test_postgres_health_reports_an_answer():
+    def fake_connection() -> Iterator[object]:
+        yield _AnsweringConnection()
+
+    app.dependency_overrides[get_connection] = fake_connection
+    try:
+        response = client.get("/health/postgres")
+    finally:
+        app.dependency_overrides.pop(get_connection, None)
+    assert response.status_code == 200
+    assert response.json() == {"ok": True}
 
 
 @pytest.mark.parametrize("copy", [
