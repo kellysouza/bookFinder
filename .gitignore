@@ -12,4 +12,3 @@ __pycache__/
 .agents/skills/neon/
 .agents/skills/neon-*/
 node_modules/
-.env.example
