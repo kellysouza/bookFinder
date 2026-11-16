@@ -8,4 +8,8 @@ __pycache__/
 .env.local
 .superpowers/
 .neon
+.cursor/
+.agents/skills/neon/
+.agents/skills/neon-*/
 node_modules/
+.env.example
