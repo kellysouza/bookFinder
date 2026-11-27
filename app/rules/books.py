@@ -54,6 +54,11 @@ def drop_unusable_books[B: NamedBook](books: list[B]) -> list[B]:
     return kept
 
 
+def same_named_book(book: NamedBook, other: NamedBook) -> bool:
+    """Return whether two books share a title and author, ignoring case and a leading article."""
+    return _book_key(book) == _book_key(other)
+
+
 def asks_for_newest(member_line: str) -> bool:
     """Return whether the member asks for the newest, latest, or most recent book."""
     return _NEWEST_PATTERN.search(member_line) is not None

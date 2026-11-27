@@ -5,4 +5,10 @@ __pycache__/
 .ruff_cache/
 .mypy_cache/
 .env
+.env.local
 .superpowers/
+.neon
+.cursor/
+.agents/skills/neon/
+.agents/skills/neon-*/
+node_modules/

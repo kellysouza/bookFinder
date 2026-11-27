@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="280" viewBox="0 0 640 280">
+  <rect width="640" height="280" fill="#ffffff"/>
+  <text x="20" y="28" font-family="sans-serif" font-size="16">Finder cases passed, out of 15</text>
+  <text x="120" y="250" font-family="sans-serif" font-size="12">claude-haiku-5.5</text>
+  <text x="390" y="250" font-family="sans-serif" font-size="12">gemini-3.5-flash</text>
+  <rect x="80" y="40" width="40" height="180" fill="#2f6fde"/>
+  <rect x="130" y="40" width="40" height="180" fill="#6a55b8"/>
+  <rect x="180" y="64" width="40" height="156" fill="#8a6ae0"/>
+  <rect x="340" y="40" width="40" height="180" fill="#2f6fde"/>
+  <rect x="390" y="40" width="40" height="180" fill="#6a55b8"/>
+  <rect x="440" y="40" width="40" height="180" fill="#8a6ae0"/>
+  <text x="20" y="270" font-family="sans-serif" font-size="12">Blue: code check. Purple: judge. Light: a person reading the rubric.</text>
+</svg>

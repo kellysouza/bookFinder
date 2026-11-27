@@ -11,12 +11,24 @@ The full proposal is in docs/proposal.md.
 ## Layout
 
 - `app/main.py`: FastAPI routes and the page. No business rules here.
+- `app/db.py`: the Postgres connection.
+- `db/migrations/`: schema changes run with dbmate.
+- `db/seed.py`: sample rows for an empty database.
+- `db/queries.py`: SQL for questions the finder asks its data.
 - `app/agent.py`: the Pydantic AI agent and its output model.
 - `app/rules/`: business rules in plain Python. No FastAPI, no LLM client.
   - `app/rules/nomination.py`: whether a save is accepted.
   - `app/rules/books.py`: cleaning the model's book list, and the newest-book note.
   - `app/rules/conversation.py`: the limits on a conversation.
+  - `app/rules/catalog.py`: which Open Library record may be shown, and where a summary comes from.
+  - `app/rules/search.py`: the similarity threshold for search by meaning.
+- `app/openlibrary.py`: the Open Library HTTP client.
+- `app/summary.py`: the summary call.
+- `app/finder.py`: confirm the model's books, then store the search.
+- `app/embeddings.py`: the gateway embedder and the fake embedder.
+- `app/library.py`: the store. Postgres is the production store.
 - `scripts/evaluate_finder.py`: a hand-run check of the finder against the real model, with its cases in `scripts/finder_cases.json`. Not run by pytest.
+- `evals/`: the Pydantic Evals set. Not run by pytest.
 - This is the starting layout. When a module takes on a second responsibility, split it by responsibility (for example, `app/rules.py` into `app/rules/quota.py` and `app/rules/scope.py`) and update this section in the same change.
 
 ## Commands
@@ -32,7 +44,7 @@ uv run pytest                    # run the tests
 
 - Tests never call a real model. Use `TestModel` with
 `override_allow_model_requests(False)`.
-- Read `LLM_API_TOKEN` and `LLM_API_GATEWAY` from the environment. Never
+- Read `LLM_API_TOKEN`, `LLM_API_GATEWAY`, and `DATABASE_URL` from the environment. Never
 write a key into a file other than `.env`.
 - Run `uv run ruff check`, `uv run mypy`, and `uv run pytest` after every
 change, and include their output in your report. Do not report a change as

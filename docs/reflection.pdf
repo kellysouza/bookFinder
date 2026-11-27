@@ -1,0 +1,68 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Length 1610 >>
+stream
+BT
+/F1 16 Tf
+1 0 0 1 50 740 Tm (Reflection) Tj
+/F1 11 Tf
+1 0 0 1 50 716 Tm (What happened. The evaluation was set up to compare temperature 0) Tj
+/F1 11 Tf
+1 0 0 1 50 701 Tm (with a warmer temperature, on the same fifteen cases. Every case) Tj
+/F1 11 Tf
+1 0 0 1 50 686 Tm (failed before the model wrote a reply. The gateway said) Tj
+/F1 11 Tf
+1 0 0 1 50 671 Tm (claude-haiku-5.5 supports only temperature 1. The coding agent) Tj
+/F1 11 Tf
+1 0 0 1 50 656 Tm (had chosen temperature because the assignment lists it as one) Tj
+/F1 11 Tf
+1 0 0 1 50 641 Tm (factor that can be changed. The error named the parameter, so the) Tj
+/F1 11 Tf
+1 0 0 1 50 626 Tm (second run kept the temperature unset and changed the model to) Tj
+/F1 11 Tf
+1 0 0 1 50 611 Tm (gemini-3.5-flash instead. The code check stayed at 15 of 15.) Tj
+/F1 11 Tf
+1 0 0 1 50 596 Tm (The replies were not the same: the first model twice stated a) Tj
+/F1 11 Tf
+1 0 0 1 50 581 Tm (death the rubric forbids, and the judge passed those replies.) Tj
+/F1 11 Tf
+1 0 0 1 50 566 Tm () Tj
+/F1 11 Tf
+1 0 0 1 50 551 Tm (What this is worth next time. Read the provider error before) Tj
+/F1 11 Tf
+1 0 0 1 50 536 Tm (changing a prompt or a score. A setting the model rejects is not) Tj
+/F1 11 Tf
+1 0 0 1 50 521 Tm (a result. A judge that passes a reply the rubric fails is not) Tj
+/F1 11 Tf
+1 0 0 1 50 506 Tm (ready to be trusted on that rubric. Counting whether the expected) Tj
+/F1 11 Tf
+1 0 0 1 50 491 Tm (title showed up does not need the judge. Deciding when a judge's) Tj
+/F1 11 Tf
+1 0 0 1 50 476 Tm (pass is wrong still needs a person to read the reply.) Tj
+ET
+endstream
+endobj
+3 0 obj
+<< /Type /Page /Parent 4 0 R /MediaBox [0 0 612 792] /Contents 2 0 R /Resources << /Font << /F1 1 0 R >> >> >>
+endobj
+4 0 obj
+<< /Type /Pages /Count 1 /Kids [3 0 R] >>
+endobj
+5 0 obj
+<< /Type /Catalog /Pages 4 0 R >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000079 00000 n 
+0000001741 00000 n 
+0000001867 00000 n 
+0000001924 00000 n 
+trailer << /Size 6 /Root 5 0 R >>
+startxref
+1973
+%%EOF
