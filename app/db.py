@@ -5,6 +5,7 @@ from collections.abc import Iterator
 
 import psycopg
 from dotenv import load_dotenv
+from pgvector.psycopg import register_vector
 from psycopg import Connection
 
 
@@ -24,9 +25,11 @@ def load_database_url() -> str:
 def connect() -> Connection:
     """Open one pooled connection, or raise when Postgres cannot be reached."""
     try:
-        return psycopg.connect(load_database_url())
+        opened = psycopg.connect(load_database_url())
     except psycopg.Error as error:
         raise DatabaseUnavailable("Postgres did not connect.") from error
+    register_vector(opened)
+    return opened
 
 
 def postgres_answers(connection: Connection) -> bool:

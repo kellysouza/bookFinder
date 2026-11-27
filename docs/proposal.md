@@ -87,7 +87,7 @@ First call. Input: the path the member chose, the conversation, and the books sh
 
 Second call. It checks the named books in Open Library by title and author before they are shown. When the model names none, or the member says the book is newer, it searches Open Library with the member's words or the author's name. It does not fill the form from memory.
 
-Third call, once per kept book. Input: title, author, the typed text, and the Open Library description. Output: the summary in the model’s own words, not a copy or a translation of Open Library. Page count is not an output of this call. Where the plot comes from when the description is unusable is open below. An idea is not stored as a book until Open Library confirms it.
+Third call, once per kept book. Input: title, author, the typed text, and the Open Library description. Output: the summary in the model’s own words, not a copy or a translation of Open Library. Page count is not an output of this call. When the Open Library description is usable, this call rewrites it. When it is not, the call may use what the model already knows, and the card says so. An empty summary stays empty until the member writes it. An idea is not stored as a book until Open Library confirms it.
 
 ## Data use
 
@@ -109,7 +109,7 @@ The voting app’s nomination gains a page-count field. That row is written only
 
 ## Searchable text
 
-The description the member saved, the Open Library description, and what the member typed. A search for a kind of book is a later search by meaning over those descriptions, not a match on an Open Library subject.
+The description the member saved, the Open Library description, and what the member typed. A search for a kind of book is a search by meaning over those descriptions, stored as embeddings with pgvector in this same database. It is not a match on an Open Library subject. The member can try it from the page. A passage is stored once for one embedding model, with a hash of the model name, the text, and the place it came from. The search shows the book and which description the passage came from. A cosine similarity below 0.35 means nothing matched. That cutoff sits between a controlled-society description and an unrelated line, measured with the project's fake embedder. The same cutoff is used for the gateway embeddings until it is measured again on those vectors.
 
 ## Human review
 
@@ -121,26 +121,26 @@ The form is filled in. The write fails becausxe the title or author is missing, 
 
 ## Three acceptance criteria
 
-1. Given “a ship sinks, the author is erik larson” during a meeting that is accepting nominations, when the member selects *Dead Wake* and saves, then the vote list gains *Dead Wake* by Erik Larson with the summary that was on the form.
-2. Given the Greg Bear example, when the reply is shown, then *Blood Music* by Greg Bear is offered only if Open Library returned it. If not, the reply asks for more and does not offer a different book that only has “bear” in the title. Books already on the meeting stay unchanged.
-3. Given a selected book and a meeting that is not accepting nominations, when the member saves, then the write fails, the selection stays, the book is not added, and books already on the meeting stay unchanged.
+1. Given “a ship sinks, the author is erik larson” during a meeting that is accepting nominations, when the member selects *Dead Wake* and saves, then the vote list gains *Dead Wake* by Erik Larson with the summary that was on the form. Checked by `test_saving_dead_wake_adds_it_to_the_nomination_list` in `tests/test_routes.py`.
+2. Given the Greg Bear example, when the reply is shown, then *Blood Music* by Greg Bear is offered only if Open Library returned it. If not, the reply asks for more and does not offer a different book that only has “bear” in the title. Books already on the meeting stay unchanged. Checked by `test_blood_music_is_offered_only_when_open_library_returns_it` and `test_a_miss_asks_for_more_and_offers_no_book` in `tests/test_routes.py`.
+3. Given a selected book and a meeting that is not accepting nominations, when the member saves, then the write fails, the selection stays, the book is not added, and books already on the meeting stay unchanged. Checked by `test_a_closed_meeting_keeps_the_saved_list_and_reports_the_error` in `tests/test_routes.py`.
 
 ## Outside version one
 
-Version one does not rebuild voting, accounts, or results. It is not a phone app. It does not write back to Open Library, scan a barcode, track reading, or run a discussion. It does not save a book the member did not select. It runs locally. A public site waits for Docker and cloud.
+Version one does not rebuild voting, accounts, or results. It is not a phone app. It does not write back to Open Library, scan a barcode, track reading, or run a discussion. It does not save a book the member did not select. It does not search the web. The nomination list in this finder is the list the member reopens after a restart. The app is packaged with Docker and deployed on Cloud Run, with its database password and model token in Secret Manager.
 
 Later: look up a book the club already nominated, to nominate it again or only to read it, and look up the previous winning book. That reads the voting app. Names, emails, and vote counts stay out of the prompt. Also later: tabs for several searches at once.
 
+## Summary source
+
+A usable Open Library description has at least 40 characters, and at least four in five of its letters are basic Latin letters. A missing, tiny, or non-English description is not usable. The Open Library description is kept on the work either way.
+
+When the description is usable, the summary call rewrites it in the model's own words, and the card says the summary is drawn from Open Library. When it is not usable, the summary call may use what the model already knows, and the card says the summary is not from Open Library. When that call returns nothing, the summary stays empty until the member writes it. There is no web search.
+
+## Newest book
+
+When the member asks for an author's newest or latest book, the finder looks that author up in Open Library and keeps the record with the latest year, when that record is the same author. The fixed cutoff note still appears on the reply. There is no web search.
+
 ## Open questions
 
-Where does the summary’s plot come from when Open Library’s description is missing, in another language, or wrong? Title and author do not contain it. The Open Library description is kept on the work either way. The candidates are what the model already knows, a usable description that the model rewrites, or a web search.
-
-The model's knowledge has a cutoff, so books newer than it, including an author's newest, need Open Library sorted by date or a web search. Which one, and whether a web search can go through the gateway, is open.
-
-## Next investigation
-
-That source is the biggest uncertainty. Open Library and the course model can answer it.
-
-For *Blood Music*, *Dead Wake*, and *Murder on the Orient Express*, record whether searching Open Library by the book's title and author returns it, whether Open Library has one record or several, whether any record has a usable description, and whether a jacket summary is accurate without that description and without the ending.
-
-If the model does not know the book and no record has a usable description, version one either allows a web search or shows the book with no summary until the member writes one.
+None for version one. The summary source and the newest-book lookup are decided above.

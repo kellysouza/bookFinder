@@ -1,0 +1,132 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Length 205 >>
+stream
+BT
+/F1 16 Tf
+1 0 0 1 50 740 Tm (Book finder) Tj
+/F1 11 Tf
+1 0 0 1 50 716 Tm (A club member nominates a book from a scrap of memory,) Tj
+/F1 11 Tf
+1 0 0 1 50 701 Tm (or from a kind of book they want.) Tj
+ET
+endstream
+endobj
+3 0 obj
+<< /Length 242 >>
+stream
+BT
+/F1 16 Tf
+1 0 0 1 50 740 Tm (One save, from the browser) Tj
+/F1 11 Tf
+1 0 0 1 50 716 Tm (Browser, FastAPI on Cloud Run, the agent, Open Library,) Tj
+/F1 11 Tf
+1 0 0 1 50 701 Tm (Neon Postgres. The card shows the Open Library record.) Tj
+ET
+endstream
+endobj
+4 0 obj
+<< /Length 334 >>
+stream
+BT
+/F1 16 Tf
+1 0 0 1 50 740 Tm (What the agent does) Tj
+/F1 11 Tf
+1 0 0 1 50 716 Tm (It names at most three books. Open Library has to confirm) Tj
+/F1 11 Tf
+1 0 0 1 50 701 Tm (each one. A summary is rewritten from that description,) Tj
+/F1 11 Tf
+1 0 0 1 50 686 Tm (or marked as the model's own when the description is unusable.) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Length 209 >>
+stream
+BT
+/F1 16 Tf
+1 0 0 1 50 740 Tm (Demo) Tj
+/F1 11 Tf
+1 0 0 1 50 716 Tm (One realistic line, the confirmed card, the source,) Tj
+/F1 11 Tf
+1 0 0 1 50 701 Tm (and the nomination still there after a refresh.) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Length 292 >>
+stream
+BT
+/F1 16 Tf
+1 0 0 1 50 740 Tm (What the eval showed) Tj
+/F1 11 Tf
+1 0 0 1 50 716 Tm (Fifteen of fifteen titles matched on both models.) Tj
+/F1 11 Tf
+1 0 0 1 50 701 Tm (The judge missed two replies that stated a death.) Tj
+/F1 11 Tf
+1 0 0 1 50 686 Tm (Chart: docs/evaluations-chart.svg) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Length 205 >>
+stream
+BT
+/F1 16 Tf
+1 0 0 1 50 740 Tm (Next) Tj
+/F1 11 Tf
+1 0 0 1 50 716 Tm (Require a find-path answer to name one book when one fits,) Tj
+/F1 11 Tf
+1 0 0 1 50 701 Tm (so an extra card is not a free pass.) Tj
+ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 14 0 R /MediaBox [0 0 612 792] /Contents 2 0 R /Resources << /Font << /F1 1 0 R >> >> >>
+endobj
+9 0 obj
+<< /Type /Page /Parent 14 0 R /MediaBox [0 0 612 792] /Contents 3 0 R /Resources << /Font << /F1 1 0 R >> >> >>
+endobj
+10 0 obj
+<< /Type /Page /Parent 14 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 1 0 R >> >> >>
+endobj
+11 0 obj
+<< /Type /Page /Parent 14 0 R /MediaBox [0 0 612 792] /Contents 5 0 R /Resources << /Font << /F1 1 0 R >> >> >>
+endobj
+12 0 obj
+<< /Type /Page /Parent 14 0 R /MediaBox [0 0 612 792] /Contents 6 0 R /Resources << /Font << /F1 1 0 R >> >> >>
+endobj
+13 0 obj
+<< /Type /Page /Parent 14 0 R /MediaBox [0 0 612 792] /Contents 7 0 R /Resources << /Font << /F1 1 0 R >> >> >>
+endobj
+14 0 obj
+<< /Type /Pages /Count 6 /Kids [8 0 R 9 0 R 10 0 R 11 0 R 12 0 R 13 0 R] >>
+endobj
+15 0 obj
+<< /Type /Catalog /Pages 14 0 R >>
+endobj
+xref
+0 16
+0000000000 65535 f 
+0000000009 00000 n 
+0000000079 00000 n 
+0000000335 00000 n 
+0000000628 00000 n 
+0000001013 00000 n 
+0000001273 00000 n 
+0000001616 00000 n 
+0000001872 00000 n 
+0000001999 00000 n 
+0000002126 00000 n 
+0000002254 00000 n 
+0000002382 00000 n 
+0000002510 00000 n 
+0000002638 00000 n 
+0000002730 00000 n 
+trailer << /Size 16 /Root 15 0 R >>
+startxref
+2781
+%%EOF

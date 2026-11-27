@@ -1,0 +1,125 @@
+{
+  "model": "gemini-3.5-flash",
+  "cases": [
+    {
+      "name": "1-blood-music",
+      "output": "It sounds like you might be thinking of the acclaimed science fiction author **Greg Bear**, whose last name contains \"Bear.\" He wrote some of the most famous biology-focused science fiction. Do either of these classic novels by him sound like the one you are looking for?\nBooks: Blood Music; Darwin's Radio",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "2-controlled-society",
+      "output": "If you are looking for books with themes similar to *Brave New World*, such as societal control, technological influence, and the loss of individuality, here are three classic dystopian novels you might enjoy nominating:\nBooks: 1984; Fahrenheit 451; We",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "3-huxley",
+      "output": "Here are three science fiction and dystopian novels by Aldous Huxley that you might consider for your book club. Do any of these look like a good choice?\nBooks: Brave New World; Island; Ape and Essence",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "4-dead-wake",
+      "output": "Is it *Dead Wake: The Last Crossing of the Lusitania* by Erik Larson? Would you like to nominate it?\nBooks: Dead Wake: The Last Crossing of the Lusitania",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "5-train",
+      "output": "Are you thinking of *Murder on the Orient Express* by Agatha Christie? Or perhaps one of her other train-based mysteries like *The Mystery of the Blue Train* or *4.50 from Paddington*? Let me know which one fits!\nBooks: Murder on the Orient Express; The Mystery of the Blue Train; 4.50 from Paddington",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "6-space",
+      "output": "Here are three excellent books about space travel that feature elements of mystery and alien life. Do any of these sound like what you are looking for?\nBooks: Rendezvous with Rama; Project Hail Mary; Solaris",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "7-martian",
+      "output": "Is \"The Martian\" by Andy Weir the book you are looking for? If so, would you like to nominate it?\nBooks: The Martian",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "8-summary-train",
+      "output": "Are you thinking of one of these Agatha Christie mysteries set on a train?\nBooks: Murder on the Orient Express; The Mystery of the Blue Train; 4.50 from Paddington",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "9-vague",
+      "output": "Hi! What book do you have in mind for your book club? Tell me anything you can remember about it, like the plot, characters, author, or setting, and I'll help you find it.\nBooks: (none)",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "10-weather",
+      "output": "I'm here to help you find or choose a book to nominate for your book club. Do you have a book in mind that you're trying to find, or would you like some suggestions?\nBooks: (none)",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "11-greg-alone",
+      "output": "I'm not sure which Greg you have in mind with just his first name. Do you remember what the book was about, its genre, or any words from the title?\nBooks: (none)",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "12-broad",
+      "output": "To help me give you some great recommendations, what kinds of books does your book club usually enjoy? For example, do you prefer fiction or non-fiction, and are there any specific genres, themes, or recent favorites you've discussed?\nBooks: (none)",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "13-newest",
+      "output": "Brandon Sanderson has had several major recent releases depending on the series. Are you looking for his newest epic fantasy installment, his latest Secret Project, or the conclusion to his sci-fi series? Here are his most recent books: This is the newest I know of. My book knowledge stops at a cutoff, so there may be a newer one.\nBooks: Wind and Truth; The Sunlit Man; Defiant",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "14-made-up",
+      "output": "I don't recognize that one. It may be newer than what I know. Do you remember the author, or anything else about it?\nBooks: (none)",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "15-typo",
+      "output": "Are you looking for \"The Hunger Games\" by Suzanne Collins? If so, would you like to nominate it?\nBooks: The Hunger Games",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    }
+  ]
+}

@@ -20,7 +20,15 @@ The full proposal is in docs/proposal.md.
   - `app/rules/nomination.py`: whether a save is accepted.
   - `app/rules/books.py`: cleaning the model's book list, and the newest-book note.
   - `app/rules/conversation.py`: the limits on a conversation.
+  - `app/rules/catalog.py`: which Open Library record may be shown, and where a summary comes from.
+  - `app/rules/search.py`: the similarity threshold for search by meaning.
+- `app/openlibrary.py`: the Open Library HTTP client.
+- `app/summary.py`: the summary call.
+- `app/finder.py`: confirm the model's books, then store the search.
+- `app/embeddings.py`: the gateway embedder and the fake embedder.
+- `app/library.py`: the store. Postgres is the production store.
 - `scripts/evaluate_finder.py`: a hand-run check of the finder against the real model, with its cases in `scripts/finder_cases.json`. Not run by pytest.
+- `evals/`: the Pydantic Evals set. Not run by pytest.
 - This is the starting layout. When a module takes on a second responsibility, split it by responsibility (for example, `app/rules.py` into `app/rules/quota.py` and `app/rules/scope.py`) and update this section in the same change.
 
 ## Commands

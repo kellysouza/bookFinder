@@ -1,0 +1,125 @@
+{
+  "model": "claude-haiku-5.5",
+  "cases": [
+    {
+      "name": "1-blood-music",
+      "output": "That sounds like Greg Bear's \"Blood Music,\" a biological science fiction novel. Would you like to nominate it for your book club?\nBooks: Blood Music",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "2-controlled-society",
+      "output": "Here are three books with themes similar to Brave New World: a future society that controls people through comfort, technology, and conformity. Each one explores those ideas in a different way.\nBooks: 1984; Fahrenheit 451; We",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "3-huxley",
+      "output": "Aldous Huxley wrote several science fiction novels, and these are the best known. Brave New World is his most famous, a dystopian story about a controlled future society. Island is his last novel, a utopian story about a remote island. Ape and Essence is a darker post-apocalyptic tale. Would you like to nominate one of these?\nBooks: Brave New World; Island; Ape and Essence",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "4-dead-wake",
+      "output": "Erik Larson's best-known book about a sinking ship is \"Dead Wake: The Last Crossing of the Lusitania,\" which covers the 1915 sinking of the Lusitania. Is that the book you want to nominate?\nBooks: Dead Wake: The Last Crossing of the Lusitania",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "5-train",
+      "output": "The clues point to Murder on the Orient Express by Agatha Christie. It's a murder mystery set on a train, which matches your memory of the title's setting. Would you like to nominate this book for your club?\nBooks: Murder on the Orient Express",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "6-space",
+      "output": "Here are some book club ideas that mix space travel, mystery, and aliens. All three are well-known published novels.\nBooks: Rendezvous with Rama; The Three-Body Problem; Solaris",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "7-martian",
+      "output": "Do you mean The Martian by Andy Weir? It's a 2011 science fiction novel about an astronaut stranded on Mars. Would you like to nominate it for your book club?\nBooks: The Martian",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "8-summary-train",
+      "output": "That sounds like Murder on the Orient Express by Agatha Christie. It's the Hercule Poirot mystery where a murder happens on a train stopped by snow. Would you like to nominate it for your book club?\nBooks: Murder on the Orient Express",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "9-vague",
+      "output": "Hi! Which book are you thinking of? Tell me what you remember about it, such as the title, the author, the genre, or roughly when it came out.\nBooks: (none)",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "10-weather",
+      "output": "I can't check the weather. I can help you find a book for your club, though. If you have one in mind, tell me what you remember about it, such as the author's full name, a word from the title, or the genre.\nBooks: (none)",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "11-greg-alone",
+      "output": "I need a bit more to go on. Do you remember the book's title, what it's about, or roughly when you read it? \"Greg\" alone is not enough to pinpoint one book.\nBooks: (none)",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "12-broad",
+      "output": "Happy to help you pick. What kind of books does your club usually enjoy? For example, a genre you like, a book you all loved recently, or how long you want the read to be.\nBooks: (none)",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "13-newest",
+      "output": "The newest Brandon Sanderson book I know of is Wind and Truth, the fifth book in The Stormlight Archive, published in December 2024. Would you like to nominate it for your book club? This is the newest I know of. My book knowledge stops at a cutoff, so there may be a newer one.\nBooks: Wind and Truth",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "14-made-up",
+      "output": "I don't recognize that one. It may be newer than what I know. Do you remember the author, or anything else about it?\nBooks: (none)",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    },
+    {
+      "name": "15-typo",
+      "output": "Do you mean \"The Hunger Games\"? It's the 2008 dystopian novel by Suzanne Collins, the first book in the trilogy about Katniss Everdeen. Would you like to nominate it for your book club?\nBooks: The Hunger Games",
+      "scores": {
+        "ExpectedBooks": true,
+        "LLMJudge": true
+      }
+    }
+  ]
+}

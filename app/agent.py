@@ -9,6 +9,7 @@ from pydantic_ai import Agent, ModelRetry
 from pydantic_ai.models import Model
 from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.providers.openai import OpenAIProvider
+from pydantic_ai.settings import ModelSettings
 
 from app.rules.books import NEWEST_NOTE, asks_for_newest, drop_unusable_books
 from app.rules.conversation import (
@@ -59,6 +60,7 @@ class FinderRequest(BaseModel):
     path: FinderPath
     turns: list[Turn]
     books: list[BookOption] = Field(default=[], max_length=MAX_BOOKS)
+    session_id: int | None = None
 
     @model_validator(mode="after")
     def check_turns(self) -> Self:
@@ -104,9 +106,8 @@ INSTRUCTIONS = (
     'Do you remember the author, or anything else about it?" '
     'For an author\'s "newest" or "latest", name the newest you know of. '
     "When one book fits, ask whether they would like to nominate it. "
-    'When they say yes ("yes, that one"), say that nominating from the finder '
-    "is coming soon and that for now they can add the book, by name, "
-    "with the club app's Add a Book form. "
+    'When they say yes ("yes, that one"), tell them to check the title and author '
+    "on the card, edit the summary if they want, and save it on this page. "
     "Do not ask anything else, and do not say it was saved."
 )
 
@@ -128,14 +129,14 @@ def check_reply(output: FinderAnswer) -> FinderAnswer:
     return output
 
 
-def gateway_model() -> OpenAIChatModel:
-    """Return the course gateway model, reading its settings from the environment."""
+def gateway_model(name: str = "claude-haiku-5.5") -> OpenAIChatModel:
+    """Return a course gateway model, reading its settings from the environment."""
     load_dotenv()
     provider = OpenAIProvider(
         base_url=os.environ["LLM_API_GATEWAY"],
         api_key=os.environ["LLM_API_TOKEN"],
     )
-    return OpenAIChatModel("claude-haiku-5.5", provider=provider)
+    return OpenAIChatModel(name, provider=provider)
 
 
 def _book_line(book: BookOption) -> str:
@@ -155,9 +156,15 @@ def prompt_for(request: FinderRequest) -> str:
     return "\n".join(lines)
 
 
-async def answer(request: FinderRequest, model: Model) -> FinderAnswer:
+async def answer(
+    request: FinderRequest,
+    model: Model,
+    model_settings: ModelSettings | None = None,
+) -> FinderAnswer:
     """Ask the finder agent, then clean its books and add the newest note when asked."""
-    result = await finder_agent.run(prompt_for(request), model=model)
+    result = await finder_agent.run(
+        prompt_for(request), model=model, model_settings=model_settings
+    )
     books = drop_unusable_books(result.output.books)
     reply = result.output.reply
     last_member_line = request.turns[-1].text
